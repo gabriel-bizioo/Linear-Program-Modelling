@@ -3,7 +3,7 @@
 #define PESO 0
 #define VOLUME 1
 #define GANHO 2
-#define M3T 3
+#define DENSIDADE 3
 
 
 int main() {
@@ -22,7 +22,7 @@ int main() {
     for(i = 0; i < n; i++) {
         scanf("%f %f %f", &carregamentos[i][PESO], &carregamentos[i][VOLUME],
                 &carregamentos[i][GANHO]);
-        carregamentos[i][M3T] = carregamentos[i][VOLUME]/carregamentos[i][PESO];
+        carregamentos[i][DENSIDADE] = carregamentos[i][VOLUME]/carregamentos[i][PESO];
     }
 
     /* Modela o programa linear no formato de lp_solve,
@@ -30,8 +30,8 @@ int main() {
 
     // Max:
     for(i = 1; i < n; i++)
-        printf("%fx%d + ", carregamentos[i-1][2], i);
-    printf("%fx%d;\n\n", carregamentos[i-1][2], i);
+        printf("%fx%d + ", carregamentos[i-1][GANHO], i);
+    printf("%fx%d;\n\n", carregamentos[i-1][GANHO], i);
 
     // S.T.:
     // Limite de cada compartimento
@@ -42,9 +42,9 @@ int main() {
 
         for(j = 1; j < n; j++)
             printf("%fx%d%d + ",
-                    carregamentos[j-1][M3T], j, i);
+                    carregamentos[j-1][DENSIDADE], j, i);
         printf("%fx%d%d <= %f;\n\n",
-                carregamentos[j-1][M3T], j, i, compartimentos[i-1][VOLUME]);
+                carregamentos[j-1][DENSIDADE], j, i, compartimentos[i-1][VOLUME]);
 
     }
 
